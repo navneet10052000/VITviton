@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parking App - Page 5</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: space-between;
+    }
+
+    .header {
+      text-align: left;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .dropdown {
+      background-color: #1E1E1E;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .dropdown-options {
+      display: none;
+      background-color: #1E1E1E;
+      margin-top: 5px;
+      padding: 5px;
+      border-radius: 5px;
+      position: absolute;
+      width: 100%;
+      top: 40px;
+      left: 0;
+      z-index: 1;
+    }
+
+    .dropdown-options div {
+      padding: 10px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .dropdown-options div:hover {
+      background-color: #333;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .slots-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .slot {
+      background-color: #333;
+      padding: 15px;
+      text-align: center;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .slot:hover {
+      background-color: #4285F4;
+    }
+
+    .book-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .button {
+      background-color: #005f73;
+      padding: 15px;
+      border-radius: 15px;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      flex: 1;
+    }
+
+    .button:hover {
+      background-color: #4ba3fa;
+    }
+
+    .button.active {
+      background-color: #4ba3fa;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-radius: 5px;
+      background-color: #1E1E1E;
+    }
+
+    .footer div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      font-size: 12px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .footer div:hover {
+      background-color: #4ba3fa;
+    }
+
+    .view-all {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">NAVNEET KUMAR SAXENA</div>
+
+  <div class="dropdown" onclick="toggleDropdown()">Ground 1 ▼
+    <div class="dropdown-options" id="dropdownOptions">
+      <div onclick="changeGround(1)">Ground 1</div>
+      <div onclick="changeGround(2)">Ground 2</div>
+      <div onclick="changeGround(3)">Ground 3</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="view-all">
+      <h3>Today's Available Slots</h3>
+      <h3><a href="page6.html" style="color: #4ba3fa;">View all</a></h3>
+    </div>
+    <div class="slots-container" id="slotsContainer"></div>
+  </div>
+
+  <div class="section">
+    <h3>Book Parking Slot</h3>
+    <div class="book-buttons">
+      <div class="button" onclick="bookSlot('today')">Today</div>
+      <div class="button" onclick="bookSlot('tomorrow')">Tomorrow</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div onclick="goToHome()">
+      <img src="home.png" alt="Home" style="width: 25px; height: 25px; margin-bottom: 5px;">
+      <span>Home</span>
+    </div>
+    <div onclick="goToProfile()">
+      <img src="profile.jpg" alt="Profile" style="width: 25px; height: 25px; margin-bottom: 5px;">
+      <span>Profile</span>
+    </div>
+  </div>
+
+  <script>
+    let currentGround = 1;
+    let selectedDay = null;
+
+    function toggleDropdown() {
+      const dropdown = document.getElementById("dropdownOptions");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function changeGround(ground) {
+      currentGround = ground;
+      document.querySelector(".dropdown").childNodes[0].nodeValue = "Ground " + ground + " ▼";
+      document.getElementById("dropdownOptions").style.display = "none";
+      loadSlots(ground);
+    }
+
+    function loadSlots(ground) {
+      const container = document.getElementById("slotsContainer");
+      container.innerHTML = "";
+      for (let i = 1; i <= 40; i++) {
+        const slot = document.createElement("div");
+        slot.className = "slot";
+        slot.innerText = `G${ground}-B${i}`;
+        slot.onclick = () => bookSlotDirect(`G${ground}-B${i}`);
+        container.appendChild(slot);
+      }
+    }
+
+    function bookSlotDirect(slotValue) {
+      if (!selectedDay) {
+        alert("Please select a booking day first (Today or Tomorrow).");
+        return;
+      }
+
+      // Save details to localStorage
+      localStorage.setItem("selectedSlot", slotValue);
+      localStorage.setItem("selectedGround", `Ground ${currentGround}`);
+      localStorage.setItem("selectedDay", selectedDay);
+
+      // Redirect to confirmation / QR page
+      window.location.href = "page7.html";
+    }
+
+    function bookSlot(day) {
+      selectedDay = day;
+
+      // Highlight selected button
+      document.querySelectorAll(".book-buttons .button").forEach(btn => btn.classList.remove("active"));
+      const clickedButton = Array.from(document.querySelectorAll(".book-buttons .button")).find(btn => btn.innerText.toLowerCase() === day);
+      if (clickedButton) clickedButton.classList.add("active");
+
+      alert(`Booking for ${day.charAt(0).toUpperCase() + day.slice(1)} is selected. Please choose a slot.`);
+    }
+
+    function goToHome() {
+      window.location.href = "home.html";
+    }
+
+    function goToProfile() {
+      window.location.href = "profile.html";
+    }
+
+    // Initial load
+    loadSlots(currentGround);
+  </script>
+</body>
+</html>

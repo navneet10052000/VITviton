@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking App - Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+        }
+
+        .header {
+            text-align: left;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .dropdown {
+            background-color: #1E1E1E;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-options {
+            display: none;
+            background-color: #1E1E1E;
+            margin-top: 5px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .dropdown-options div {
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .dropdown-options div:hover {
+            background-color: #333;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .slots-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .slot {
+            background-color: #333;
+            padding: 15px;
+            text-align: center;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .slot:hover {
+            background-color: #4285F4;
+        }
+
+        .book-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .button {
+            background-color: #005f73;
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            flex: 1;
+        }
+
+        .button:hover {
+            background-color: #4ba3fa;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            background-color: #1E1E1E;
+        }
+
+        .footer div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            font-size: 14px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .footer div:hover {
+            background-color: #4ba3fa;
+        }
+
+        .view-all {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .booking-details {
+            background-color: #4285F4;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .booking-details .left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .booking-details .left p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+
+        .booking-details .qr-code {
+            background-color: white;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            padding: 3px;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">NAVNEET KUMAR SAXENA</div>
+    
+    <!-- Booking Details Section -->
+    <div id="bookingDetails" class="booking-details" style="display: none;">
+        <div class="left">
+            <p><strong>Ground 1 Parking</strong></p>
+            <p>Parking Spot: <span id="bookedSpot">B-054</span></p>
+            <p>Timing: 8 am - 8 pm</p>
+            <p>Vehicle: DL 05AQ 3544</p>
+        </div>
+        <div class="qr-code">
+            <img src="https://via.placeholder.com/100" alt="QR Code" id="qrCode"/>
+        </div>
+    </div>
+    
+    <div class="dropdown" onclick="toggleDropdown()">Ground 1 ▼
+        <div class="dropdown-options" id="dropdownOptions">
+            <div onclick="changeGround(1)">Ground 1</div>
+            <div onclick="changeGround(2)">Ground 2</div>
+            <div onclick="changeGround(3)">Ground 3</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <div class="view-all">
+            <h3>Today's Available Slots</h3>
+            <h3><a href="page6.html" style="color: #4ba3fa;">View all</a></h3>
+        </div>
+        <div class="slots-container" id="slotsContainer"></div>
+    </div>
+    
+    <div class="section">
+        <h3>Book Parking Slot</h3>
+        <div class="book-buttons">
+            <div class="button" onclick="bookSlot('today')">Today</div>
+            <div class="button" onclick="bookSlot('tomorrow')">Tomorrow</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div onclick="goToHome()">
+            <img src="imagepage1/home.jpg" alt="Home" style="width: 25px; height: 25px; margin-bottom: 5px;">
+            <span>Home</span>
+        </div>
+        <div onclick="goToProfile()">
+            <img src="imagepage1/profile.png" alt="Profile" style="width: 25px; height: 25px; margin-bottom: 5px;">
+            <span>Profile</span>
+        </div>
+    </div>
+
+    <script>
+        let bookedSlot = localStorage.getItem('bookedSlot') || null;
+
+        function toggleDropdown() {
+            let dropdown = document.getElementById("dropdownOptions");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        function changeGround(ground) {
+            document.querySelector(".dropdown").innerHTML = "Ground " + ground + " ▼<div class='dropdown-options' id='dropdownOptions'> <div onclick='changeGround(1)'>Ground 1</div> <div onclick='changeGround(2)'>Ground 2</div> <div onclick='changeGround(3)'>Ground 3</div> </div>";
+            document.getElementById("dropdownOptions").style.display = "none";
+            loadSlots(ground);
+        }
+
+        function loadSlots(ground) {
+            let container = document.getElementById("slotsContainer");
+            container.innerHTML = "";
+            for (let i = 1; i <= 40; i++) {
+                let slot = document.createElement("div");
+                slot.className = "slot";
+                slot.innerText = `B-${i}`;
+                slot.onclick = () => bookSlot(i);
+                container.appendChild(slot);
+            }
+        }
+
+        function bookSlot(slotNumber) {
+            alert(`Slot B-${slotNumber} booked`);
+            localStorage.setItem('bookedSlot', `B-${slotNumber}`);
+            window.location.href = 'page6.html';
+        }
+
+        function goToHome() {
+            window.location.href = "home.html";
+        }
+
+        function goToProfile() {
+            window.location.href = "profile.html";
+        }
+
+        // Display booking details if available
+        if (bookedSlot) {
+            document.getElementById('bookingDetails').style.display = 'flex';
+            document.getElementById('bookedSpot').innerText = bookedSlot;
+            // QR Code generation can be dynamic if needed
+            document.getElementById('qrCode').src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(bookedSlot)}&size=100x100`;
+        }
+
+        loadSlots(1);
+    </script>
+</body>
+</html>

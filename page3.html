@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking App - Page 3</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #121212;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .image-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .image-wrapper img {
+            width: 150px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #555;
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            background-color: #4285F4;
+        }
+
+        .vehicle-section {
+            background-color: #1E1E1E;
+            border-radius: 10px;
+            padding: 20px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+
+        .vehicle-section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .vehicle-section input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #121212;
+        }
+
+        .vehicle-section input::placeholder {
+            color: #aaa;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 48%;
+            padding: 10px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #4285F4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #3367D6;
+        }
+
+        .flag {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .flag img {
+            width: 30px;
+            height: auto;
+        }
+
+        .flag input {
+            flex-grow: 1;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-wrapper">
+            <img src="imagepage1/8170240.jpg" alt="Car illustration">
+        </div>
+        <h1>Welcome to the app</h1>
+        <p>We’re excited to help you book and manage your parking with ease.</p>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot active"></span>
+            <span class="dot active"></span>
+        </div>
+
+        <div class="vehicle-section">
+            <h2>Enter vehicle details</h2>
+            <p>One step process to register your vehicle</p>
+            <div class="flag">
+                <img src="imagepage1/indian flag.png" alt="India flag">
+                <input type="text" placeholder="AB12CD3456">
+                <span>&#10004;</span>
+            </div>
+            <div class="button-group">
+                <button class="button" onclick="addVehicle()">Add Vehicle</button>
+                <button class="button" onclick="navigateToPage4()">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup" class="popup">Vehicle has been added</div>
+
+    <script>
+        function addVehicle() {
+            let popup = document.getElementById("popup");
+            popup.style.display = "block";
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 2000);
+        }
+
+        function navigateToPage4() {
+            window.location.href = 'page4.html'; // Redirects to the next page
+        }
+    </script>
+</body>
+</html>

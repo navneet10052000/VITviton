@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-header {
+            margin-top: 20px;
+        }
+
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            background-color: #444;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 10px auto;
+        }
+
+        .vehicle-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vehicle-card {
+            background-color: #004080;
+            padding: 15px;
+            border-radius: 10px;
+            width: 45%;
+            text-align: center;
+        }
+
+        .settings {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .settings div {
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+        }
+
+        .settings div:hover {
+            background-color: #222;
+        }
+
+        .logout {
+            color: red;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            background-color: #1E1E1E;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-header">
+        <div class="profile-pic">NS</div>
+        <h2 id="userName">Navneet Kumar Saxena</h2>
+        <p id="userReg">Registration no. XXXXXXXXXX</p>
+    </div>
+
+    <h3>Vehicles</h3>
+    <div class="vehicle-section">
+        <div class="vehicle-card" onclick="selectVehicle('Bike')">Default<br><strong>Bike</strong><br><span id="bikeReg">DL 05AQ 3544</span></div>
+        <div class="vehicle-card" onclick="selectVehicle('Car')">Added<br><strong>Car</strong><br><span id="carReg">DL 05AQ 3544</span></div>
+    </div>
+
+    <h3>Settings</h3>
+    <div class="settings">
+        <div>Edit Profile</div>
+        <div>Help Center</div>
+        <div class="logout" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="footer">
+        <div class="button" style="width: 50%; text-align: center;" onclick="goToHome()">Home</div>
+        <div class="button" style="width: 50%; text-align: center;" onclick="goToProfile()">Profile</div>
+    </div>
+
+    <script>
+        function goToHome() {
+            window.location.href = "home.html";
+        }
+
+        function logout() {
+            alert('Logging out...');
+            window.location.href = "index.html";
+        }
+
+        function loadUserData() {
+            let userData = JSON.parse(localStorage.getItem('userProfile')) || {
+                name: 'Navneet Kumar Saxena',
+                regNo: 'XXXXXXXXXX',
+                bikeReg: 'DL 05AQ 3544',
+                carReg: 'DL 05AQ 3544'
+            };
+            document.getElementById('userName').innerText = userData.name;
+            document.getElementById('userReg').innerText = `Registration no. ${userData.regNo}`;
+            document.getElementById('bikeReg').innerText = userData.bikeReg;
+            document.getElementById('carReg').innerText = userData.carReg;
+        }
+
+        function selectVehicle(vehicle) {
+            alert(`${vehicle} selected successfully!`);
+            localStorage.setItem('selectedVehicle', vehicle);
+        }
+
+        function goToProfile() {
+            window.location.href = "profile.html";
+        }
+    </script>
+</body>
+</html>

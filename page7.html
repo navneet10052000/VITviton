@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Confirmed</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .heart {
+      font-size: 80px;
+      color: #ff4d6d;
+      animation: beat 1s infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes beat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    .message {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .details {
+      font-size: 16px;
+      color: #cccccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="heart">✅</div>
+  <div class="message">Slot Booked Successfully!</div>
+  <div class="details">Redirecting you to the QR</div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = 'page8.html';
+    }, 4000); // 4 seconds delay
+  </script>
+</body>
+</html>

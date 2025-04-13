@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking App - Page 1</title>
+    <link rel="stylesheet" href="page1.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #121212;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .image-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .image-wrapper img {
+            width: 350px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #555;
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            background-color: #4285F4;
+        }
+
+        .get-started {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #4285F4;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .get-started:hover {
+            background-color: #3367D6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-wrapper">
+            <img src="imagepage1/8170240.jpg" alt="Car illustration">
+        </div>
+        <h1>Welcome to VITON</h1>
+        <p>Your on-the-go VIT parking app. We’re excited to help you book and manage your parking with ease.</p>
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <button class="get-started">Get started</button>
+    </div>
+
+    <script>
+        document.querySelector('.get-started').addEventListener('click', () => {
+            window.location.href = 'page2.html'; // Redirects to the next page
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Slot</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .header {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .ground-selector {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .arrow {
+      cursor: pointer;
+      font-size: 24px;
+      margin: 0 15px;
+    }
+
+    .book-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      background-color: #005f73;
+      padding: 15px;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      width: 120px;
+      text-align: center;
+    }
+
+    .button.active {
+      background-color: #4ba3fa;
+    }
+
+    .slots-container {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding-bottom: 80px;
+    }
+
+    .slots-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .slots-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .slot {
+      min-width: 80px;
+      max-width: 100px;
+      background-color: #333;
+      padding: 15px;
+      text-align: center;
+      border-radius: 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 14px;
+      scroll-snap-align: start;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      text-align: center;
+      background-color: #1E1E1E;
+      padding: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">Select Slot</div>
+
+  <div class="ground-selector">
+    <span class="arrow" onclick="changeGround(-1)">&#9664;</span>
+    <span id="groundText">Ground 1</span>
+    <span class="arrow" onclick="changeGround(1)">&#9654;</span>
+  </div>
+
+  <div class="book-buttons">
+    <div class="button" onclick="selectDay(this, 'today')">Today</div>
+    <div class="button" onclick="selectDay(this, 'tomorrow')">Tomorrow</div>
+  </div>
+
+  <h3>Available Slots</h3>
+  <div class="slots-container" id="slotsContainer"></div>
+
+  <div class="footer">
+    <div class="button" style="width: 100%;" onclick="bookSelectedSlot()">Book Slot</div>
+  </div>
+
+  <script>
+    let currentGround = 1;
+    let selectedVehicle = localStorage.getItem('selectedVehicle') || 'Car';
+    let totalSlots = selectedVehicle === 'Bike' ? 200 : 80;
+    let selectedSlot = null;
+    let selectedDay = null;
+
+    function loadSlots() {
+      let slotsContainer = document.getElementById("slotsContainer");
+      slotsContainer.innerHTML = "";
+      let rows = 5;
+      let cols = 10;
+      let slotNumber = 1;
+      for (let row = 0; row < rows; row++) {
+        let rowDiv = document.createElement("div");
+        rowDiv.className = "slots-row";
+        for (let col = 0; col < cols; col++) {
+          if (slotNumber > totalSlots) break;
+          let slot = document.createElement("div");
+          slot.className = "slot";
+          slot.innerText = `G${currentGround}-B${slotNumber}`;
+          slot.onclick = () => selectSlot(slot);
+          rowDiv.appendChild(slot);
+          slotNumber++;
+        }
+        slotsContainer.appendChild(rowDiv);
+      }
+    }
+
+    function selectSlot(slot) {
+      if (selectedSlot) {
+        selectedSlot.style.backgroundColor = "#333";
+      }
+      selectedSlot = slot;
+      selectedSlot.style.backgroundColor = "#4ba3fa";
+    }
+
+    function selectDay(button, day) {
+      document.querySelectorAll(".book-buttons .button").forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+      selectedDay = day;
+      localStorage.setItem("selectedDay", day);
+    }
+
+    function changeGround(direction) {
+      currentGround += direction;
+      if (currentGround > 3) currentGround = 1;
+      if (currentGround < 1) currentGround = 3;
+      document.getElementById("groundText").innerText = `Ground ${currentGround}`;
+      loadSlots();
+    }
+
+    function bookSelectedSlot() {
+      if (!selectedDay) {
+        alert("Please select a day first.");
+        return;
+      }
+      if (!selectedSlot) {
+        alert("Please select a slot first.");
+        return;
+      }
+
+      const slotValue = selectedSlot.innerText;
+      const groundText = `Ground ${currentGround}`;
+
+      localStorage.setItem("selectedSlot", slotValue);
+      localStorage.setItem("selectedGround", groundText);
+
+      window.location.href = 'page7.html';
+    }
+
+    document.getElementById("groundText").innerText = `Ground ${currentGround}`;
+    loadSlots();
+  </script>
+</body>
+</html>
